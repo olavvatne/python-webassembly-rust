@@ -1,0 +1,1 @@
+occurrences: func(text: string, matching: string) -> u32

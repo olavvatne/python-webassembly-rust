@@ -1,0 +1,3 @@
+hello: func(name: string) -> string
+
+overhead: func(name: string) -> tuple<string, u64>
