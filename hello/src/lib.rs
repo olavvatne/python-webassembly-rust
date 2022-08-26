@@ -1,4 +1,4 @@
-wit_bindgen_rust::export!("wits/say.wit");
+wit_bindgen_guest_rust::export!("wits/say.wit");
 
 struct Say;
 
