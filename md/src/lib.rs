@@ -1,4 +1,4 @@
-wit_bindgen_rust::export!("wits/markdown.wit");
+wit_bindgen_guest_rust::export!("wits/markdown.wit");
 use pulldown_cmark::{html, Parser};
 
 struct Markdown;

@@ -13,7 +13,7 @@ pip install -r requirements.txt
 
 cargo install cargo-wasi
 cargo wasi --version
-cargo install --git https://github.com/bytecodealliance/wit-bindgen wit-bindgen-cli
+cargo install --git https://github.com/bytecodealliance/wit-bindgen --rev  a4a138b wit-bindgen-cli
 ```
 
 ## Running experiments
@@ -23,7 +23,7 @@ cargo install --git https://github.com/bytecodealliance/wit-bindgen wit-bindgen-
 ```bash
 cd hello
 cargo wasi build --release
-wit-bindgen wasmtime-py --import wits/say.wit
+wit-bindgen host wasmtime-py --import wits/say.wit
 cd ..
 python run-hello.py
 ```
@@ -32,7 +32,7 @@ python run-hello.py
 ```bash
 cd md
 cargo wasi build --release
-wit-bindgen wasmtime-py --import wits/markdown.wit
+wit-bindgen host wasmtime-py --import wits/markdown.wit
 cd ..
 python run-markdown.py
 ```
@@ -41,7 +41,7 @@ python run-markdown.py
 ```bash
 cd rosetta
 cargo wasi build --release
-wit-bindgen wasmtime-py --import wits/rosetta.wit
+wit-bindgen host wasmtime-py --import wits/rosetta.wit
 cd ..
 python run-rosetta.py
 ```
@@ -74,7 +74,7 @@ edition = "2021"
 crate-type = ["cdylib"]
 
 [dependencies]
-wit-bindgen-rust = { git = "https://github.com/bytecodealliance/wit-bindgen" }
+wit-bindgen-guest-rust = { git = "https://github.com/bytecodealliance/wit-bindgen" }
 ```
 
 Create an WebAssembly Interface Types file at `wits/thingy.wit`:
@@ -84,7 +84,7 @@ run: func(input: string) -> string
 
 implement the run function in `src/lib.rs`:
 ```rust
-wit_bindgen_rust::export!("wits/thingy.wit");
+wit_bindgen_guest_rust::export!("wits/thingy.wit");
 
 struct Thingy;
 
@@ -102,7 +102,7 @@ This produces a `thingy.wasm` file somewhere inside the target folder.
 
 Then make the python bindings with the wit-bindgen CLI:
 ```
-wit-bindgen wasmtime-py --import wits/thingy.wit
+wit-bindgen host wasmtime-py --import wits/thingy.wit
 ```
 
 This produces a bindings.py file. Add a `__init__.py` file in the root, so bindings.py can be imported. Or move it.
